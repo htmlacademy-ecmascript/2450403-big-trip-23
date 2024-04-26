@@ -1,0 +1,3 @@
+const WAYPOINTS_QUANTITY = 3;
+
+export {WAYPOINTS_QUANTITY};
