@@ -13,7 +13,7 @@ const createTripInfoBlock = () => `
 </p>
 </section>`;
 
-export default class TripInfoBlock {
+export default class TripInfoBlockView {
   getTemplate () {
     return createTripInfoBlock();
   }

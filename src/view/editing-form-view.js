@@ -166,9 +166,13 @@ const createEditingFormTemplate = () => `
   </li>
 </ul>`;
 
-export default class EditigForm {
+export default class EditigFormView {
+  constructor({trip}) {
+    this.trip = trip;
+  }
+
   getTemplate() {
-    return createEditingFormTemplate();
+    return createEditingFormTemplate(this.trip);
   }
 
   getElement() {

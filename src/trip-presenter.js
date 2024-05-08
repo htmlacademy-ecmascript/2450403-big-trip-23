@@ -1,27 +1,28 @@
-import {WAYPOINTS_QUANTITY} from './view/data.js';
-import EditingForm from './view/editing-form.js';
-import Sorting from './view/sorting.js';
-import Waypoint from './view/waypoint.js';
-import Filter from './view/filter.js';
+import EditigFormView from './view/editing-form-view.js';
 import {RenderPosition, render} from './render.js';
-import TripInfoBlock from './view/trip-info-block.js';
+import TripInfoBlockView from './view/trip-info-block-view.js';
+import WaypointView from './view/waypoint-view.js';
+import SortingView from './view/sorting-view.js';
+import FilterView from './view/filter-view.js';
 
 export default class TripPresenter {
-  constructor({tripMain}) {
+  constructor({tripMain, tripsModel}) {
     this.tripMain = tripMain;
+    this.tripsModel = tripsModel;
   }
 
   init() {
+    this.tripsModels = [...this.tripsModel.getTrips()];
     const tripControlsFilters = document.querySelector('.trip-controls__filters');
     const tripEvents = document.querySelector('.trip-events');
 
-    render(new TripInfoBlock(), this.tripMain, RenderPosition.AFTERBEGIN);
-    render(new Filter(), tripControlsFilters, RenderPosition.BEFOREBEGIN);
-    render(new Sorting(), tripEvents);
-    render(new EditingForm(), tripEvents);
+    render(new TripInfoBlockView(), this.tripMain, RenderPosition.AFTERBEGIN);
+    render(new FilterView(), tripControlsFilters, RenderPosition.BEFOREBEGIN);
+    render(new SortingView(), tripEvents);
+    render(new EditigFormView({ trip: this.tripsModels[0]}), tripEvents);
 
-    for (let i = 0; i < WAYPOINTS_QUANTITY; i++) {
-      render(new Waypoint(), tripEvents);
+    for (let i = 1; i < this.tripsModels.length; i++) {
+      render(new WaypointView({ trip: this.tripsModels[i]}), tripEvents);
     }
   }
 }
