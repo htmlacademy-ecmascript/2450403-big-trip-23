@@ -1,13 +1,14 @@
 import TripPresenter from './trip-presenter.js';
-import TripsModel from './model/trips-model.js';
+import TripModel from './model/trips-model.js';
 
 const tripMain = document.querySelector('.trip-main');
 const pageBodyContainer = document.querySelector('.page-body__container');
-const tripsModel = new TripsModel();
+const tripModel = new TripModel();
 
-const tripPresenter = new TripPresenter({tripMain, tripsModel});
-const tripSortAndContent = new TripPresenter({pageBodyContainer, tripsModel});
+const tripPresenter = new TripPresenter({tripMain, tripModel});
+const tripSortAndContent = new TripPresenter({pageBodyContainer, tripModel});
 
 
 tripPresenter.init();
 tripSortAndContent.init();
+

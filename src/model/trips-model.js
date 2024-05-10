@@ -1,10 +1,12 @@
-import { getRandomTrip } from '../mock/trip.js';
-import { TRIPS_AMOUNT } from '../const.js';
+import { mockTrips } from '../mock/trip.js';
+import { getRandomArrayElement } from '../utils.js';
 
-export default class TripsModel {
-  trips = Array.from({length: TRIPS_AMOUNT}, getRandomTrip);
+export default class TripModel {
+  constructor() {
+    this.trip = Array.from({ length: mockTrips.length }, () => getRandomArrayElement(mockTrips));
+  }
 
   getTrips() {
-    return this.trips;
+    return this.trip;
   }
 }

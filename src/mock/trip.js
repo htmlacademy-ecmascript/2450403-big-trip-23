@@ -1,111 +1,173 @@
-import { TYPE_TRIPS, DESTINATION, formattedEndDates, formattedStartDates, ADD_OPTION } from '../const.js';
-import { getRandomArrayElement } from '../utils.js';
-
 const mockTrips = [
   {
-    'id': self.crypto.randomUUID(),
-    'tripType': TYPE_TRIPS['flight'],
-    'basePrice': 0,
-    'description': false,
-    'photos': false,
+    'basePrice': 1050,
+    'dateFrom': '2019-07-10T22:55:56.845Z',
+    'dateTo': '2019-07-11T11:22:13.375Z',
+    'destination': 'cfe416cq-10xa-ye10-8077-2fs9a01edcab',
     'isFavorite': false,
-    'startTime': getRandomArrayElement(formattedStartDates),
-    'endTime': getRandomArrayElement(formattedEndDates),
-    'options': false
+    'offers': [],
+    'type': 'flight'
   },
   {
-    'id': self.crypto.randomUUID(),
-    'tripType': getRandomArrayElement(Object.entries(TYPE_TRIPS)),
+    'id': 'f4b62099-293f-4c3d-a702-94eec4a2808c',
     'basePrice': 1100,
-    'destination': DESTINATION[0]['cityName'],
-    'description': DESTINATION[0]['description'],
-    'photos': DESTINATION[0]['photos'],
-    'isFavorite': true,
-    'startTime': getRandomArrayElement(formattedStartDates),
-    'endTime': getRandomArrayElement(formattedEndDates),
-    'options': false,
+    'dateFrom': '2024-05-01T08:30:00.000Z',
+    'dateTo': '2024-05-01T09:15:00.000Z',
+    'destination': 'bfa5cb75-a1fe-4b77-a83c-0e528e910e04',
+    'isFavorite': false,
+    'offers': [
+      'b4c3e4e6-9053-42ce-b747-e281314baa31'
+    ],
+    'type': 'taxi'
   },
   {
-    'id': self.crypto.randomUUID(),
-    'tripType': getRandomArrayElement(Object.entries(TYPE_TRIPS)),
+    'id': '6b7668e0e-07e2-460b-9d33-5c59e075256b',
+    'basePrice': 980,
+    'dateFrom': '2024-05-02T10:00:00.000Z',
+    'dateTo': '2024-05-15T15:30:00.000Z',
+    'destination': '6b7668e0e-07e2-460b-9d33-5c59e075256b',
+    'isFavorite': true,
+    'offers': [
+      'b4c3e4e6-9053-42ce-b747-e281314baa31',
+      'd2453c57-0886-4c7e-bc12-70b897905759',
+      'b93b6bda-86f8-4b54-a113-c8439b5a6f29',
+      'af6b8812-08de-4e2d-9792-86c8f781bf66',
+      'b4c3e4e6-9053-42ce-b325-e281314baa42'
+    ],
+    'type': 'flight'
+  },
+  {
+    'id': '6a2f41a3-ca54-49da-9b23-8a6b932bf418',
+    'basePrice': 980,
+    'dateFrom': '2024-05-07T12:00:00.000Z',
+    'dateTo': '2024-05-12T18:25:00.000Z',
+    'destination': '7cc0b103-d3c1-44f3-aafb-a947b6ad944b',
+    'isFavorite': true,
+    'offers': [
+      'b4c3e4e6-9053-42ce-b747-e281314baa31',
+      'd2453c57-0886-4c7e-bc12-70b897905759',
+      'b93b6bda-86f8-4b54-a113-c8439b5a6f29',
+      'af6b8812-08de-4e2d-9792-86c8f781bf66',
+      'b4c3e4e6-9053-42ce-b325-e281314baa42'
+    ],
+    'type': 'flight'
+  },
+  {
+    'id': '6d54900b-b5d6-4869-8d8b-af3918da0723',
+    'basePrice': 1230,
+    'dateFrom': '2024-05-10T14:30:00.000Z',
+    'dateTo': '2024-05-18T20:45:00.000Z',
+    'destination': '6a2f41a3-ca54-49da-9b23-8a6b932bf418',
+    'isFavorite': false,
+    'offers': [
+      '3e3b9c1f-9be5-4c83-a630-c9f8065e5c8a',
+      'af6b8812-08de-4e2d-9792-86c8f781bf66',
+      'd2453c57-0886-4c7e-bc12-70b897905759',
+    ],
+    'type': 'ship'
+  },
+  {
+    'id': 'e3f82d52-2c03-41ed-8b30-f2508c72b5d7',
+    'basePrice': 1460,
+    'dateFrom': '2024-05-06T07:45:00.000Z',
+    'dateTo': '2024-05-06T10:10:00.000Z',
+    'destination': 'cfe416cq-10xa-ye10-8077-2fs9a01edcab',
+    'isFavorite': true,
+    'offers': [
+    ],
+    'type': 'drive'
+  },
+  {
+    'id': 'f4b62099-293f-4c3d-a702-94eec4a2808c',
+    'basePrice': 1500,
+    'dateFrom': '2024-05-02T09:00:00.000Z',
+    'dateTo': '2024-05-02T11:30:00.000Z',
+    'destination': 'cfe416cq-10xa-ye10-8077-2fs9a01edcab',
+    'isFavorite': true,
+    'offers': [
+      'b4c3e4e6-9053-42ce-b325-e281314baa42',
+      'af6b8812-08de-4e2d-9792-86c8f781bf66'
+    ],
+    'type': 'taxi'
+  },
+  {
+    'id': 'a3775a18-76f1-46d4-a658-9d028db590a9',
+    'basePrice': 900,
+    'dateFrom': '2024-05-04T14:00:00.000Z',
+    'dateTo': '2024-05-04T20:00:00.000Z',
+    'destination': '6a2f41a3-ca54-49da-9b23-8a6b932bf418',
+    'isFavorite': false,
+    'offers': [
+      '3e3b9c1f-9be5-4c83-a630-c9f8065e5c8a',
+      'b93b6bda-86f8-4b54-a113-c8439b5a6f29'
+    ],
+    'type': 'check-in'
+  },
+  {
+    'id': '62f684b6-a819-4baa-a3d6-cc3d5846c71f',
+    'basePrice': 1200,
+    'dateFrom': '2024-05-05T10:15:00.000Z',
+    'dateTo': '2024-05-05T18:45:00.000Z',
+    'destination': '6b7668e0e-07e2-460b-9d33-5c59e075256b',
+    'isFavorite': true,
+    'offers': [
+      'd2453c57-0886-4c7e-bc12-70b897905759',
+      '984fd4d8-8d8f-4cef-93bd-001676ad2237'
+    ],
+    'type': 'train'
+  },
+  {
+    'id': 'e3f82d52-2c03-41ed-8b30-f2508c72b5d7',
+    'basePrice': 700,
+    'dateFrom': '2024-05-06T12:30:00.000Z',
+    'dateTo': '2024-05-06T15:00:00.000Z',
+    'destination': 'bfa5cb75-a1fe-4b77-a83c-0e528e910e04',
+    'isFavorite': false,
+    'offers': [],
+    'type': 'bus'
+  },
+  {
+    'id': 'fc158cd8-9f73-4fae-9ebc-a507962c67eb',
+    'basePrice': 1100,
+    'dateFrom': '2024-05-07T16:45:00.000Z',
+    'dateTo': '2024-05-07T19:00:00.000Z',
+    'destination': '7cc0b103-d3c1-44f3-aafb-a947b6ad944b',
+    'isFavorite': true,
+    'offers': [
+      'b4c3e4e6-9053-42ce-b747-e281314baa31',
+      'b4c3e4e6-9053-42ce-b325-e281314baa42',
+      '3e3b9c1f-9be5-4c83-a630-c9f8065e5c8a'
+    ],
+    'type': 'drive'
+  },
+  {
+    'id': '7cc0b103-d3c1-44f3-aafb-a947b6ad944b',
+    'basePrice': 1300,
+    'dateFrom': '2024-05-08T08:00:00.000Z',
+    'dateTo': '2024-05-08T12:00:00.000Z',
+    'destination': 'cfe416cq-10xa-ye10-8077-2fs9a01edcab',
+    'isFavorite': false,
+    'offers': [
+      '57fc2461-435c-43ba-8b8a-e2b0d9e50770',
+      '2a8f1cde-9c3f-4c25-a30f-c2625a9b925f',
+      'f0b77b49-568c-43d8-b273-634bffec4a15'
+    ],
+    'type': 'ship'
+  },
+  {
+    'id': '984fd4d8-8d8f-4cef-93bd-001676ad2237',
     'basePrice': 800,
-    'destination': DESTINATION[1]['cityName'],
-    'description': DESTINATION[1]['description'],
-    'photos': DESTINATION[1]['photos'],
-    'isFavorite': false,
-    'startTime': getRandomArrayElement(formattedStartDates),
-    'endTime': getRandomArrayElement(formattedEndDates),
-    'options': {
-      'comfort': ADD_OPTION['comfort'],
-      'comfortDecription': ADD_OPTION['comfort']['description'],
-      'comfortPrice': ADD_OPTION['comfort']['price'],
-    },
-  },
-  {
-    'id': self.crypto.randomUUID(),
-    'tripType': getRandomArrayElement(Object.entries(TYPE_TRIPS)),
-    basePrice: 1500,
-    destination: DESTINATION[2]['cityName'],
-    description: DESTINATION[2]['description'],
-    photos: DESTINATION[2]['photos'],
+    'dateFrom': '2024-05-09T13:00:00.000Z',
+    'dateTo': '2024-05-09T18:00:00.000Z',
+    'destination': '6a2f41a3-ca54-49da-9b23-8a6b932bf418',
     'isFavorite': true,
-    startTime: getRandomArrayElement(formattedStartDates),
-    endTime: getRandomArrayElement(formattedEndDates),
-    options: {
-      luggageDescription: ADD_OPTION['luggage']['description'],
-      luggagePrice: ADD_OPTION['luggage']['price'],
-      comfortDecription: ADD_OPTION['comfort']['description'],
-      comfortPrice: ADD_OPTION['comfort']['price'],
-      mealDescriprion: ADD_OPTION['meal']['description'],
-      mealPrice: ADD_OPTION['meal']['price'],
-      seatsDescriprion: ADD_OPTION['seats']['description'],
-      seatsPrice: ADD_OPTION['seats']['price'],
-      trainDescription: ADD_OPTION['train']['description'],
-      trainPrice: ADD_OPTION['train']['price']
-    }
-  },
-  {
-    id: self.crypto.randomUUID(),
-    tripType: getRandomArrayElement(Object.entries(TYPE_TRIPS)),
-    basePrice: 955,
-    destination: DESTINATION[3]['cityName'],
-    description: DESTINATION[3]['description'],
-    photos: DESTINATION[3]['photos'],
-    'isFavorite': false,
-    'startTime': getRandomArrayElement(formattedStartDates),
-    'endTime': getRandomArrayElement(formattedEndDates),
-    options: {
-      comfortDecription: ADD_OPTION['comfort']['description'],
-      comfortPrice: ADD_OPTION['comfort']['price'],
-      mealDescriprion: ADD_OPTION['meal']['description'],
-      mealPrice: ADD_OPTION['meal']['price'],
-    }
-  },
-  {
-    id: self.crypto.randomUUID(),
-    tripType: getRandomArrayElement(Object.entries(TYPE_TRIPS)),
-    basePrice: 1400,
-    destination: DESTINATION[4]['cityName'],
-    description: DESTINATION[4]['description'],
-    photos: DESTINATION[4]['photos'],
-    'isFavorite': true,
-    'startTime': getRandomArrayElement(formattedStartDates),
-    'endTime': getRandomArrayElement(formattedEndDates),
-    options: {
-      luggageDescription: ADD_OPTION['luggage']['description'],
-      luggagePrice: ADD_OPTION['luggage']['price'],
-      comfortDecription: ADD_OPTION['comfort']['description'],
-      comfortPrice: ADD_OPTION['comfort']['price'],
-      mealDescriprion: ADD_OPTION['meal']['description'],
-      mealPrice: ADD_OPTION['meal']['price'],
-      seatsDescriprion: ADD_OPTION['seats']['description'],
-      seatsPrice: ADD_OPTION['seats']['price'],
-    }
-  },
+    'offers': [
+      'ca53d02c-249f-434b-8635-8b00788f7af6',
+      'af6b8812-08de-4e2d-9792-86c8f781bf66'
+    ],
+    'type': 'sightseeing'
+  }
 ];
 
-function getRandomTrip() {
-  return getRandomArrayElement(mockTrips);
-}
+export { mockTrips };
 
-export { getRandomTrip };
