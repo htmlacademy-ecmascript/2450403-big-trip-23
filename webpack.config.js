@@ -1,6 +1,9 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
+const flatpickr = require('flatpickr');
+const webpack = require('webpack');
+const dayjs = require('dayjs')
 
 module.exports = {
   entry: './src/main.js',
@@ -24,6 +27,10 @@ module.exports = {
         },
       ],
     }),
+    new webpack.ProvidePlugin({
+      flatpickr: flatpickr,
+      dayjs: dayjs,
+    })
   ],
   module: {
     rules: [
