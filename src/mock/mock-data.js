@@ -1,11 +1,11 @@
-const DESTINATIONS = [
+const destinationPoints = [
   {
     'id': 'cfe416cq-10xa-ye10-8077-2fs9a01edcab',
     'description': 'Chamonix, is a beautiful city, a true asian pearl, with crowded streets.',
     'name': 'Chamonix',
     'pictures': [
       {
-        'src': 'http://picsum.photos/300/200?r=0.0762563005163317',
+        'src': 'https://frenchmoments.eu/wp-content/uploads/2012/11/Chamonix-Mont-Blanc-Featured-Image-web-copyright-French-Moments.jpg',
         'description': 'Chamonix parliament building'
       }]},
   {
@@ -86,7 +86,7 @@ const DESTINATIONS = [
   },
 ];
 
-const EXTRA_OPTIONS = [
+const extraOptions = [
   {
     'type': 'taxi',
     'offers': [
@@ -98,59 +98,19 @@ const EXTRA_OPTIONS = [
     ]
   },
   {
-    'type': 'luggage',
+    'type': 'bus',
     'offers': [
       {
-        'id': 'b4c3e4e6-9053-42ce-b325-e281314baa42',
-        'title': 'Add luggage',
-        'price': 70
+        'id': '5a1c2b4c-9045-4d2c-b512-c3fb78cf6d76',
+        'title': 'Reserved seating',
+        'price': 50
+      },
+      {
+        'id': '9a3c2b4c-4567-4d2c-b512-c3fb78cf6abc',
+        'title': 'On-board Wi-Fi',
+        'price': 15
       }
     ]
-  },
-  {
-    'type': 'comfort',
-    'offers': [
-      {
-        'id': '3e3b9c1f-9be5-4c83-a630-c9f8065e5c8a',
-        'title': 'Switch to comfort class',
-        'price': 150
-      },
-      {
-        'id': 'af6b8812-08de-4e2d-9792-86c8f781bf66',
-        'title': 'Add personal guided tour',
-        'price': 300
-      },
-      {
-        'id': 'ca53d02c-249f-434b-8635-8b00788f7af6',
-        'title': 'Upgrade a hotel room',
-        'price': 560
-      },
-    ]
-  },
-  {
-    'type': 'meal',
-    'offers': [
-      {
-        'id': 'b93b6bda-86f8-4b54-a113-c8439b5a6f29',
-        'title': 'Add hotel breakfast',
-        'price': 120
-      },
-      {
-        'id': 'd2453c57-0886-4c7e-bc12-70b897905759',
-        'title': 'Сustomize your menu',
-        'price': 320
-      }
-    ]
-  },
-  {
-    'type': 'seats',
-    'offers': [
-      {
-        'id': '3a5bc237-b3e0-4346-b20b-a9c3e5ad5f35',
-        'title': 'Choose seats',
-        'price': 30
-      },
-    ],
   },
   {
     'type': 'train',
@@ -177,6 +137,86 @@ const EXTRA_OPTIONS = [
       },
     ],
   },
+  {
+    'type': 'ship',
+    'offers': [
+      {
+        'id': 'b8f78e4a-339c-4d2f-bf8c-2d6f3469c947',
+        'title': 'Cabin upgrade',
+        'price': 250
+      }
+    ]
+  },
+  {
+    'type': 'drive',
+    'offers': [
+      {
+        'id': 'df56s4e8-9e4b-47b3-a11b-83b1d898b021',
+        'title': 'Full tank pre-purchase',
+        'price': 60
+      },
+      {
+        'id': 'af43298c-700b-4732-b200-3d8b8c0f8b30',
+        'title': 'GPS system',
+        'price': 70
+      }
+    ]
+  },
+  {
+    'type': 'flight',
+    'offers': [
+      {
+        'id': '12c3b7ed-8412-417e-8a1a-39771ec73b46',
+        'title': 'Extra leg room',
+        'price': 50
+      },
+      {
+        'id': '01ab23cd-4567-89ab-cdef-12345efdb678',
+        'title': 'Window seat',
+        'price': 30
+      },
+      {
+        'id': '23ac68f1-4b8e-4f62-8b4d-ec8e9b5f78ec',
+        'title': 'Complimentary beverage',
+        'price': 5
+      }
+    ]
+  },
+  {
+    'type': 'check-in',
+    'offers': [
+      {
+        'id': 'c3f8b7ed-8412-417e-8a1a-39771ec73b47',
+        'title': 'Priority check-in',
+        'price': 20
+      }
+    ]
+  },
+  {
+    'type': 'sightseeing',
+    'offers': [
+      {
+        'id': 'e3d8f8ed-8412-417e-8a1a-39771ec73b89',
+        'title': 'Tour guide',
+        'price': 150
+      }
+    ]
+  },
+  {
+    'type': 'restaurant',
+    'offers': [
+      {
+        'id': 'b93b6bda-86f8-4b54-a113-c8439b5a6f29',
+        'title': 'Add hotel breakfast',
+        'price': 120
+      },
+      {
+        'id': 'd2453c57-0886-4c7e-bc12-70b897905759',
+        'title': 'Customize your menu',
+        'price': 320
+      }
+    ]
+  }
 ];
 
-export { DESTINATIONS, EXTRA_OPTIONS };
+export { destinationPoints, extraOptions };

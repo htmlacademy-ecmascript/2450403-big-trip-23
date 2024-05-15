@@ -1,32 +1,29 @@
 import EditigFormView from './view/editing-form-view.js';
-import {RenderPosition, render} from './render.js';
-import TripInfoBlockView from './view/trip-info-block-view.js';
 import WaypointView from './view/waypoint-view.js';
 import SortingView from './view/sorting-view.js';
-import FilterView from './view/filter-view.js';
+import WaypointsListView from './view/waypoints-list-view.js';
+
+import { render } from './render.js';
 
 export default class TripPresenter {
-  constructor({ tripMain, tripModel }) {
-    this.tripMain = tripMain;
+  constructor({ container, tripModel }) {
+    this.container = container;
     this.tripModel = tripModel;
   }
 
   init() {
-    const tripControlsFilters = document.querySelector('.trip-controls__filters');
-    const tripEvents = document.querySelector('.trip-events');
-
-    // Получаем массив всех поездок
     const trips = [...this.tripModel.getTrips()];
+    const destinations = [...this.tripModel.getDestinations()];
+    const offers = [...this.tripModel.getOffers()];
 
-    // Рендерим компоненты
-    render(new TripInfoBlockView(), this.tripMain, RenderPosition.AFTERBEGIN);
-    render(new FilterView(), tripControlsFilters, RenderPosition.BEFOREBEGIN);
-    render(new SortingView(), tripEvents);
-    render(new EditigFormView({trip: trips[0]}), tripEvents);
+    const waypointsListView = new WaypointsListView();
 
-    // Рендер всех поездок
+    render(new SortingView(), this.container);
+    render(waypointsListView, this.container);
+    render(new EditigFormView({trip: trips[0], destinations, offers}), waypointsListView.getElement());
+
     trips.forEach((trip) => {
-      render(new WaypointView({trip}), tripEvents);
+      render(new WaypointView({trip, destinations, offers}), waypointsListView.getElement());
     });
   }
 }

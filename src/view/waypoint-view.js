@@ -1,16 +1,15 @@
 import { createElement } from '../render.js';
 import { getDifferenceDate } from '../utils.js';
-import { DESTINATIONS, EXTRA_OPTIONS } from '../mock/mock-data.js';
 import dayjs from 'dayjs';
 
 
-const createWaypointTemplate = (trip) => {
+const createWaypointTemplate = (trip, destinations, offersByType) => {
   const { basePrice, dateFrom, dateTo, destination, isFavorite, offers, type } = trip;
 
-  const selectedOffers = EXTRA_OPTIONS.flatMap((option) => option.offers)
+  const selectedOffers = offersByType.flatMap((option) => option.offers)
     .filter((offer) => offers.includes(offer.id));
 
-  const desiredDestination = DESTINATIONS.find((dest) => dest.id === destination);
+  const desiredDestination = destinations.find((dest) => dest.id === destination);
 
   const dateFromDayjs = dayjs(dateFrom);
   const dateToDayjs = dayjs(dateTo);
@@ -24,7 +23,6 @@ const createWaypointTemplate = (trip) => {
   `).join('');
 
   return(`
-<ul class="trip-events__list">
   <li class="trip-events__item">
   <div class="event">
     <time class="event__date" datetime="${dateFromDayjs.format('YYYY-MM-DD')}">${dateFromDayjs.format('MMM DD')}</time>
@@ -60,13 +58,15 @@ const createWaypointTemplate = (trip) => {
   );
 };
 
-export default class WaypointView {
-  constructor({trip}) {
+export default class WaypointsView {
+  constructor({trip, destinations, offers}) {
     this.trip = trip;
+    this.destinations = destinations;
+    this.offers = offers;
   }
 
   getTemplate () {
-    return createWaypointTemplate(this.trip);
+    return createWaypointTemplate(this.trip, this.destinations, this.offers);
   }
 
   getElement () {

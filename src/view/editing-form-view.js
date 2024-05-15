@@ -1,21 +1,21 @@
 import { createElement } from '../render.js';
-import { DESTINATIONS, EXTRA_OPTIONS } from '../mock/mock-data.js';
+import dayjs from 'dayjs';
 
-const createEditingFormTemplate = (trip) => {
-  const { destination, offers, type } = trip;
+const createEditingFormTemplate = (trip, destinations, offersByType) => {
+  const { destination, type, offers } = trip;
 
-  const destinationDetails = DESTINATIONS.find((dest) => dest.id === destination);
+  const destinationDetails = destinations.find((dest) => dest.id === destination);
 
   const photoHTML = destinationDetails.pictures.map((pic) => `
     <img class="event__photo" src="${pic.src}" alt="${pic.description}">
   `).join('');
 
-  const destinationsHTML = DESTINATIONS.map((dest) => `
+  const destinationsHTML = destinations.map((dest) => `
     <option value="${dest.name}"></option>
   `).join('');
 
   // Фильтровать офферы по текущему типу события
-  const relevantOffers = EXTRA_OPTIONS.find((option) => option.type === type).offers;
+  const relevantOffers = offersByType.find((option) => option.type === type).offers;
 
   const eventOffersHTML = relevantOffers.map((offer, index) => `
     <div class="event__offer-selector">
@@ -29,7 +29,6 @@ const createEditingFormTemplate = (trip) => {
   `).join('');
 
   return (`
-    <ul class="trip-events__list">
       <li class="trip-events__item">
         <form class="event event--edit" action="#" method="post">
           <header class="event__header">
@@ -104,10 +103,10 @@ const createEditingFormTemplate = (trip) => {
 
             <div class="event__field-group  event__field-group--time">
               <label class="visually-hidden" for="event-start-time-1">From</label>
-              <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="19/03/19 00:00">
+              <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${dayjs('2019-03-19').format('DD/MM/YY HH:mm')}">
               &mdash;
               <label class="visually-hidden" for="event-end-time-1">To</label>
-              <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="19/03/19 00:00">
+              <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${dayjs('2019-03-19').format('DD/MM/YY HH:mm')}">
             </div>
 
             <div class="event__field-group  event__field-group--price">
@@ -124,7 +123,9 @@ const createEditingFormTemplate = (trip) => {
           <section class="event__details">
             <section class="event__section  event__section--offers">
               <h3 class="event__section-title  event__section-title--offers">Offers</h3>
+              <div class="event__available-offers">
               ${eventOffersHTML}
+              </div>
             </section>
 
             <section class="event__section  event__section--destination">
@@ -139,25 +140,26 @@ const createEditingFormTemplate = (trip) => {
             </section>
           </section>
         </form>
-      </li>
-    </ul>`
+      </li>`
   );
 };
 
 export default class EditigFormView {
-  constructor({trip}) {
+  constructor({trip, destinations, offers}) {
     this.trip = trip;
+    this.destinations = destinations;
+    this.offers = offers;
   }
 
   getTemplate() {
-    return createEditingFormTemplate(this.trip);
+    return createEditingFormTemplate(this.trip, this.destinations, this.offers);
   }
 
   getElement() {
     if (!this.element) {
       this.element = createElement(this.getTemplate());
     }
-
     return this.element;
   }
 }
+
