@@ -1,8 +1,8 @@
-import TripPresenter from './trip-presenter.js';
+import TripPresenter from './presenter/trip-presenter.js';
 import TripModel from './model/trip-model.js';
 import TripInfoBlockView from './view/trip-info-block-view.js';
 import FilterView from './view/filter-view.js';
-import {RenderPosition, render} from './render.js';
+import {RenderPosition, render} from './framework/render.js';
 
 const tripMain = document.querySelector('.trip-main');
 const tripEvents = document.querySelector('.trip-events');

@@ -1,4 +1,4 @@
-import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 import { getDifferenceDate } from '../utils.js';
 import dayjs from 'dayjs';
 
@@ -22,6 +22,8 @@ const createWaypointTemplate = (trip, destinations, offersByType) => {
   </li>
   `).join('');
 
+  const totalPrice = selectedOffers.reduce((price, offer) => price + offer.price, 0);
+
   return(`
   <li class="trip-events__item">
   <div class="event">
@@ -39,7 +41,7 @@ const createWaypointTemplate = (trip, destinations, offersByType) => {
       <p class="event__duration">${getDifferenceDate(dateFromDayjs, dateToDayjs)}</p>
     </div>
     <p class="event__price">
-      &euro;&nbsp;<span class="event__price-value">${basePrice}</span>
+      &euro;&nbsp;<span class="event__price-value">${basePrice + totalPrice}</span>
     </p>
     <h4 class="visually-hidden">Offers:</h4>
     <ul class="event__selected-offers">${offersHTML}</ul>
@@ -53,24 +55,24 @@ const createWaypointTemplate = (trip, destinations, offersByType) => {
       <span class="visually-hidden">Open event</span>
     </button>
   </div>
-  </li>
-<ul class="trip-events__list">`
+  </li>`
   );
 };
 
-export default class WaypointsView {
+
+export default class WaypointsView extends AbstractView {
+  #trip = null;
+  #destinations = null;
+  #offers = null;
+
   constructor({trip, destinations, offers}) {
-    this.trip = trip;
-    this.destinations = destinations;
-    this.offers = offers;
+    super();
+    this.#trip = trip;
+    this.#destinations = destinations;
+    this.#offers = offers;
   }
 
-  getTemplate () {
-    return createWaypointTemplate(this.trip, this.destinations, this.offers);
-  }
-
-  getElement () {
-    this.element = createElement(this.getTemplate());
-    return this.element;
+  get template () {
+    return createWaypointTemplate(this.#trip, this.#destinations, this.#offers);
   }
 }
