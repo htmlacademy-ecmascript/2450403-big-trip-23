@@ -2,7 +2,7 @@ import AbstractView from '../framework/view/abstract-view.js';
 import dayjs from 'dayjs';
 
 const createEditingFormTemplate = (trip, destinations, offersByType) => {
-  const { destination, type, offers } = trip;
+  const { destination, type, offers, isFavorite } = trip;
 
   const destinationDetails = destinations.find((dest) => dest.id === destination);
 
@@ -35,6 +35,7 @@ const createEditingFormTemplate = (trip, destinations, offersByType) => {
   `).join('');
 
   return (`
+  <li class="trip-events__item">
     <form class="event event--edit" action="#" method="post">
       <header class="event__header">
         <div class="event__type-wrapper">
@@ -80,6 +81,15 @@ const createEditingFormTemplate = (trip, destinations, offersByType) => {
 
         <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
         <button class="event__reset-btn" type="reset">Cancel</button>
+        <button class="event__favorite-btn ${isFavorite ? 'event__favorite-btn--active' : ''}" type="button">
+        <span class="visually-hidden">Add to favorite</span>
+        <svg class="event__favorite-icon" width="28" height="28" viewBox="0 0 28 28">
+          <path d="M14 21l-8.22899 4.3262 1.57159-9.1631L.685209 9.67376 9.8855 8.33688 14 0l4.1145 8.33688 9.2003 1.33688-6.6574 6.48934 1.5716 9.1631L14 21z"/>
+        </svg>
+      </button>
+      <button class="event__rollup-btn" type="button">
+        <span class="visually-hidden">Open event</span>
+      </button>
       </header>
       <section class="event__details">
         <section class="event__section  event__section--offers">
@@ -101,7 +111,7 @@ const createEditingFormTemplate = (trip, destinations, offersByType) => {
         </section>
       </section>
     </form>
-  `
+    </li>`
   );
 };
 
@@ -109,16 +119,48 @@ export default class EditingFormView extends AbstractView{
   #trip = null;
   #destinations = null;
   #offers = null;
+  #handleFormSubmit = null;
+  #handleFormreset = null;
 
-  constructor({trip, destinations, offers}) {
+  constructor({trip, destinations, offers, onFormSubmit, onFormReset}) {
     super();
     this.#trip = trip;
     this.#destinations = destinations;
     this.#offers = offers;
+    this.#handleFormSubmit = onFormSubmit;
+    this.#handleFormreset = onFormReset;
+
+    this.element.querySelector('.event--edit')
+      .addEventListener('submit', this.#handleFormSubmit);
+    this.element.querySelector('.event__rollup-btn')
+      .addEventListener('click', this.#handleFormreset);
+    this.element.querySelector('.event__reset-btn')
+      .addEventListener('click', this.#handleFormreset);
   }
 
   get template() {
     return createEditingFormTemplate(this.#trip, this.#destinations, this.#offers);
   }
+
+  removeElement() {
+    super.removeElement();
+    this.element.querySelector('.event--edit')
+      .removeEventListener('click', this.#onSubmitForm);
+    this.element.querySelector('.event__rollup-btn')
+      .removeEventListener('click', this.#onResetForm);
+    this.element.querySelector('.event__reset-btn')
+      .removeEventListener('click', this.#onResetForm);
+  }
+
+  #onSubmitForm = (evt) => {
+    evt.preventDefault();
+    this.#handleFormSubmit();
+  };
+
+  #onResetForm = (evt) => {
+    evt.preventDefault();
+    this.#handleFormreset();
+  };
+
 }
 

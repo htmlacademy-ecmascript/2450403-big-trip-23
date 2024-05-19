@@ -27,4 +27,6 @@ function getDifferenceDate (from, to) {
   return result.trim();
 }
 
-export { getRandomNum, getRandomArrayElement, getDifferenceDate };
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export { getRandomNum, getRandomArrayElement, getDifferenceDate, isEscapeKey };

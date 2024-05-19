@@ -64,15 +64,31 @@ export default class WaypointsView extends AbstractView {
   #trip = null;
   #destinations = null;
   #offers = null;
+  #handleFormReset = null;
 
-  constructor({trip, destinations, offers}) {
+  constructor({trip, destinations, offers, onEditClick}) {
     super();
     this.#trip = trip;
     this.#destinations = destinations;
     this.#offers = offers;
+    this.#handleFormReset = onEditClick;
+
+    this.element.querySelector('.event__rollup-btn')
+      .addEventListener('click', this.#onRollupClick);
   }
 
   get template () {
     return createWaypointTemplate(this.#trip, this.#destinations, this.#offers);
   }
+
+  removeElement() {
+    super.removeElement();
+    this.element.querySelector('.event__rollup-btn')
+      .removeEventListener('click', this.#onRollupClick);
+  }
+
+  #onRollupClick = (evt) => {
+    evt.preventDefault();
+    this.#handleFormReset();
+  };
 }
