@@ -1,14 +1,18 @@
-import TripPresenter from './trip-presenter.js';
-import TripModel from './model/trips-model.js';
+import TripPresenter from './presenter/trip-presenter.js';
+import TripModel from './model/trip-model.js';
+import TripInfoBlockView from './view/trip-info-block-view.js';
+import FilterView from './view/filter-view.js';
+import {RenderPosition, render} from './framework/render.js';
 
 const tripMain = document.querySelector('.trip-main');
-const pageBodyContainer = document.querySelector('.page-body__container');
+const tripEvents = document.querySelector('.trip-events');
+const tripControlsFilters = document.querySelector('.trip-controls__filters');
 const tripModel = new TripModel();
 
-const tripPresenter = new TripPresenter({tripMain, tripModel});
-const tripSortAndContent = new TripPresenter({pageBodyContainer, tripModel});
+render(new TripInfoBlockView(), tripMain, RenderPosition.AFTERBEGIN);
+render(new FilterView(), tripControlsFilters, RenderPosition.BEFOREBEGIN);
 
+const tripPresenter = new TripPresenter({container: tripEvents, tripModel});
 
 tripPresenter.init();
-tripSortAndContent.init();
 

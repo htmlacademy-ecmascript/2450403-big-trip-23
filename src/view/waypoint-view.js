@@ -1,16 +1,15 @@
-import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 import { getDifferenceDate } from '../utils.js';
-import { DESTINATIONS, EXTRA_OPTIONS } from '../mock/mock-data.js';
 import dayjs from 'dayjs';
 
 
-const createWaypointTemplate = (trip) => {
+const createWaypointTemplate = (trip, destinations, offersByType) => {
   const { basePrice, dateFrom, dateTo, destination, isFavorite, offers, type } = trip;
 
-  const selectedOffers = EXTRA_OPTIONS.flatMap((option) => option.offers)
+  const selectedOffers = offersByType.flatMap((option) => option.offers)
     .filter((offer) => offers.includes(offer.id));
 
-  const desiredDestination = DESTINATIONS.find((dest) => dest.id === destination);
+  const desiredDestination = destinations.find((dest) => dest.id === destination);
 
   const dateFromDayjs = dayjs(dateFrom);
   const dateToDayjs = dayjs(dateTo);
@@ -23,8 +22,9 @@ const createWaypointTemplate = (trip) => {
   </li>
   `).join('');
 
+  const totalPrice = selectedOffers.reduce((price, offer) => price + offer.price, 0);
+
   return(`
-<ul class="trip-events__list">
   <li class="trip-events__item">
   <div class="event">
     <time class="event__date" datetime="${dateFromDayjs.format('YYYY-MM-DD')}">${dateFromDayjs.format('MMM DD')}</time>
@@ -41,7 +41,7 @@ const createWaypointTemplate = (trip) => {
       <p class="event__duration">${getDifferenceDate(dateFromDayjs, dateToDayjs)}</p>
     </div>
     <p class="event__price">
-      &euro;&nbsp;<span class="event__price-value">${basePrice}</span>
+      &euro;&nbsp;<span class="event__price-value">${basePrice + totalPrice}</span>
     </p>
     <h4 class="visually-hidden">Offers:</h4>
     <ul class="event__selected-offers">${offersHTML}</ul>
@@ -55,22 +55,40 @@ const createWaypointTemplate = (trip) => {
       <span class="visually-hidden">Open event</span>
     </button>
   </div>
-  </li>
-<ul class="trip-events__list">`
+  </li>`
   );
 };
 
-export default class WaypointView {
-  constructor({trip}) {
-    this.trip = trip;
+
+export default class WaypointsView extends AbstractView {
+  #trip = null;
+  #destinations = null;
+  #offers = null;
+  #handleFormReset = null;
+
+  constructor({trip, destinations, offers, onEditClick}) {
+    super();
+    this.#trip = trip;
+    this.#destinations = destinations;
+    this.#offers = offers;
+    this.#handleFormReset = onEditClick;
+
+    this.element.querySelector('.event__rollup-btn')
+      .addEventListener('click', this.#onRollupClick);
   }
 
-  getTemplate () {
-    return createWaypointTemplate(this.trip);
+  get template () {
+    return createWaypointTemplate(this.#trip, this.#destinations, this.#offers);
   }
 
-  getElement () {
-    this.element = createElement(this.getTemplate());
-    return this.element;
+  removeElement() {
+    super.removeElement();
+    this.element.querySelector('.event__rollup-btn')
+      .removeEventListener('click', this.#onRollupClick);
   }
+
+  #onRollupClick = (evt) => {
+    evt.preventDefault();
+    this.#handleFormReset();
+  };
 }
