@@ -2,7 +2,7 @@ import AbstractView from '../framework/view/abstract-view.js';
 import dayjs from 'dayjs';
 
 const createEditingFormTemplate = (trip, destinations, offersByType) => {
-  const { destination, type, offers, isFavorite } = trip;
+  const { destination, type, offers } = trip;
 
   const destinationDetails = destinations.find((dest) => dest.id === destination);
 
@@ -30,7 +30,7 @@ const createEditingFormTemplate = (trip, destinations, offersByType) => {
   const checkedTypeHTML = offersByType.map((typeOfOption, index) => `
   <div class="event__type-item">
    <input id="event-type-${typeOfOption.type}-${index + 1}" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${typeOfOption.type}" ${type.includes(typeOfOption.type) ? 'checked' : ''}>
-    <label class="event__type-label  event__type-label--${typeOfOption.type}" for="event-type-${typeOfOption.type}-${index + 1}">${type.charAt(0).toUpperCase() + typeOfOption.type.slice(1)}</label>
+    <label class="event__type-label  event__type-label--${typeOfOption.type}" for="event-type-${typeOfOption.type}-${index + 1}">${typeOfOption.type.charAt(0).toUpperCase() + typeOfOption.type.slice(1)}</label>
   </div>
   `).join('');
 
@@ -81,12 +81,6 @@ const createEditingFormTemplate = (trip, destinations, offersByType) => {
 
         <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
         <button class="event__reset-btn" type="reset">Cancel</button>
-        <button class="event__favorite-btn ${isFavorite ? 'event__favorite-btn--active' : ''}" type="button">
-        <span class="visually-hidden">Add to favorite</span>
-        <svg class="event__favorite-icon" width="28" height="28" viewBox="0 0 28 28">
-          <path d="M14 21l-8.22899 4.3262 1.57159-9.1631L.685209 9.67376 9.8855 8.33688 14 0l4.1145 8.33688 9.2003 1.33688-6.6574 6.48934 1.5716 9.1631L14 21z"/>
-        </svg>
-      </button>
       <button class="event__rollup-btn" type="button">
         <span class="visually-hidden">Open event</span>
       </button>
@@ -115,7 +109,7 @@ const createEditingFormTemplate = (trip, destinations, offersByType) => {
   );
 };
 
-export default class EditingFormView extends AbstractView{
+export default class EditingFormView extends AbstractView {
   #trip = null;
   #destinations = null;
   #offers = null;
@@ -161,6 +155,4 @@ export default class EditingFormView extends AbstractView{
     evt.preventDefault();
     this.#handleFormreset();
   };
-
 }
-
