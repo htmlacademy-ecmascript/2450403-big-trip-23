@@ -13,7 +13,7 @@ const createTripInfoBlock = () => `
 </p>
 </section>`;
 
-export default class TripInfoBlockView extends AbstractView{
+export default class TripInfoBlockView extends AbstractView {
   get template () {
     return createTripInfoBlock();
   }
