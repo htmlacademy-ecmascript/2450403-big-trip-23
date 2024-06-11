@@ -1,6 +1,7 @@
 import AbstractView from '../framework/view/abstract-view.js';
 import dayjs from 'dayjs';
 
+
 const createEditingFormTemplate = (trip, destinations, offersByType) => {
   const { destination, type, offers } = trip;
 
