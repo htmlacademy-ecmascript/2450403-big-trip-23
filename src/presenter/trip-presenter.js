@@ -1,13 +1,15 @@
-import WaypointView from '../view/waypoint-view.js';
 import SortingView from '../view/sorting-view.js';
 import WaypointsListView from '../view/waypoints-list-view.js';
 import EditingFormView from '../view/editing-form-view.js';
 import { isEscapeKey } from '../utils.js';
 import { render, replace } from '../framework/render.js';
+import WaypointPresenter from './waypoint-presenter.js';
+
 
 export default class TripPresenter extends AbortController {
   #container = null;
   #tripModel = null;
+  #activeWaypoint = null;
 
   constructor({ container, tripModel }) {
     super();
@@ -25,49 +27,27 @@ export default class TripPresenter extends AbortController {
     render(waypointsListView, this.#container);
     render(new SortingView(), this.#container);
 
-    trips.forEach((trip) => {
-      this.#renderPoint(waypointsListView, trip, destinations, offers);
+    trips.forEach((trip, index) => {
+      this.#renderWaypoint(waypointsListView, trip, destinations, offers, favorites[index]);
     });
   }
 
-  #renderPoint(waypointsListView, trip, destinations, offers) {
-    const onEscapePress = (evt) => {
-      if (isEscapeKey(evt)) {
-        evt.preventDefault();
-        switchToViewMode();
-      }
-    };
-
-    const onEditClick = () => switchToEditMode();
-    const onFormSubmit = () => switchToViewMode();
-    const onFormReset = () => switchToViewMode();
-
-    const waypointComponent = new WaypointView({
+  #renderWaypoint(waypointsListView, trip, destinations, offers, favorites) {
+    const waypointPresenter = new WaypointPresenter({
+      waypointsListView,
       trip,
       destinations,
       offers,
-      onEditClick: onEditClick
+      favorites,
+      onWaypointEdit: this.#handleWaypointEdit.bind(this)
     });
+    waypointPresenter.render();
+  }
 
-    const editingFormComponent = new EditingFormView({
-      trip,
-      destinations,
-      offers,
-      onFormSubmit: onFormSubmit,
-      onFormReset: onFormReset
-    });
-
-
-    function switchToEditMode() {
-      replace(editingFormComponent, waypointComponent);
-      document.addEventListener('keydown', onEscapePress);
+  #handleWaypointEdit(waypointPresenter) {
+    if(this.#activeWaypoint && this.#activeWaypoint !== waypointPresenter) {
+      this.#activeWaypoint.resetEditForm();
     }
-
-    function switchToViewMode(){
-      replace(waypointComponent, editingFormComponent);
-      document.removeEventListener('keydown', onEscapePress);
-    }
-
-    render(waypointComponent, waypointsListView.element);
+    this.#activeWaypoint = waypointPresenter;
   }
 }

@@ -60,35 +60,60 @@ const createWaypointTemplate = (trip, destinations, offersByType) => {
 };
 
 
-export default class WaypointsView extends AbstractView {
+export default class WaypointView extends AbstractView {
   #trip = null;
   #destinations = null;
   #offers = null;
   #handleFormReset = null;
+  #favorites = null;
+  #handleFavoritePoint = null;
 
-  constructor({trip, destinations, offers, onEditClick}) {
+  constructor({trip, destinations, offers, favorites, onEditClick, onFavoriteButton}) {
     super();
     this.#trip = trip;
     this.#destinations = destinations;
     this.#offers = offers;
+    this.#favorites = favorites;
     this.#handleFormReset = onEditClick;
+    this.#handleFavoritePoint = onFavoriteButton;
 
+    this.#onFavoriteButtonClick = this.#onFavoriteButtonClick.bind(this);
     this.element.querySelector('.event__rollup-btn')
       .addEventListener('click', this.#onRollupClick);
+    this.element.querySelector('.event__favorite-btn')
+      .addEventListener('click', this.#onFavoriteButtonClick);
   }
 
   get template () {
-    return createWaypointTemplate(this.#trip, this.#destinations, this.#offers);
+    return createWaypointTemplate(this.#trip, this.#destinations, this.#offers, this.#favorites);
   }
 
   removeElement() {
     super.removeElement();
     this.element.querySelector('.event__rollup-btn')
       .removeEventListener('click', this.#onRollupClick);
+    this.element.querySelector('.event__rollup-btn')
+      .removeEventListener('click', this.#onFavoriteButtonClick);
   }
 
   #onRollupClick = (evt) => {
     evt.preventDefault();
     this.#handleFormReset();
+  };
+
+  #onFavoriteButtonClick = (evt) => {
+    evt.preventDefault();
+    this.#handleFavoritePoint();
+  };
+
+  updateFavorite = (isFavorite) => {
+    const favoriteButton = this.element.querySelector('.event__favorite-btn');
+    if (favoriteButton) {
+      if (isFavorite) {
+        favoriteButton.classList.add('event__favorite-btn--active');
+      } else {
+        favoriteButton.classList.remove('event__favorite-btn--active');
+      }
+    }
   };
 }

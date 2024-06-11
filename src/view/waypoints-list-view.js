@@ -6,7 +6,7 @@ const createWaypointListView = () => `
 
   </ul> `;
 
-export default class WaypointListView extends AbstractView{
+export default class WaypointsListView extends AbstractView {
   get template () {
     return createWaypointListView();
   }

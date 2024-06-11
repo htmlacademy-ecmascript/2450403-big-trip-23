@@ -5,3 +5,7 @@ export const FilterTypes = {
   PRESENT: 'present',
 };
 
+export const Mode = {
+  DEFAULT: 'DEFAULT',
+  EDIT: 'EDIT'
+};
