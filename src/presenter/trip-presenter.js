@@ -1,9 +1,9 @@
 import WaypointView from '../view/waypoint-view.js';
 import SortingView from '../view/sorting-view.js';
 import WaypointsListView from '../view/waypoints-list-view.js';
-import { render, replace } from '../framework/render.js';
 import EditingFormView from '../view/editing-form-view.js';
 import { isEscapeKey } from '../utils.js';
+import { render, replace } from '../framework/render.js';
 
 export default class TripPresenter extends AbortController {
   #container = null;
@@ -16,9 +16,9 @@ export default class TripPresenter extends AbortController {
   }
 
   init() {
-    const trips = [...this.#tripModel.getTrips()];
-    const destinations = [...this.#tripModel.getDestinations()];
-    const offers = [...this.#tripModel.getOffers()];
+    const trips = this.#tripModel.trips;
+    const destinations = this.#tripModel.destinations;
+    const offers = this.#tripModel.offers;
 
     const waypointsListView = new WaypointsListView();
 

@@ -1,5 +1,5 @@
-import AbstractView from '../framework/view/abstract-view.js';
 import { getDifferenceDate } from '../utils.js';
+import AbstractView from '../framework/view/abstract-view.js';
 import dayjs from 'dayjs';
 
 

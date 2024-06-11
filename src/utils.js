@@ -1,12 +1,14 @@
-function getRandomNum(max) {
+import { FilterTypes } from './const.js';
+
+export function getRandomNum(max) {
   return Math.floor(Math.random() * max);
 }
 
-function getRandomArrayElement(items) {
+export function getRandomArrayElement(items) {
   return items[Math.floor(Math.random() * items.length)];
 }
 
-function getDifferenceDate (from, to) {
+export function getDifferenceDate (from, to) {
   let result = '';
 
   const diifInDays = to.diff(from, 'day');
@@ -27,6 +29,15 @@ function getDifferenceDate (from, to) {
   return result.trim();
 }
 
-const isEscapeKey = (evt) => evt.key === 'Escape';
+export const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export { getRandomNum, getRandomArrayElement, getDifferenceDate, isEscapeKey };
+export const getFilterByPeriod = (trips) => {
+  const currentDate = new Date();
+
+  return {
+    [FilterTypes.EVERYTHING]: trips.length,
+    [FilterTypes.PAST]: trips.filter((trip) => new Date(trip.dateTo).getTime() < currentDate.getTime()).length,
+    [FilterTypes.PRESENT]: trips.filter((trip) => new Date(trip.dateFrom).getTime() <= currentDate.getTime() && new Date(trip.dateTo).getTime() >= currentDate.getTime()).length,
+    [FilterTypes.FUTURE]: trips.filter((trip) => new Date(trip.dateFrom).getTime() > currentDate.getTime()).length,
+  };
+};
